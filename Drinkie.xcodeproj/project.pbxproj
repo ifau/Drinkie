@@ -6,8 +6,13 @@
 	objectVersion = 70;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		A282C7002CDA3A4D0091516E /* DRAPI in Frameworks */ = {isa = PBXBuildFile; productRef = A282C6FF2CDA3A4D0091516E /* DRAPI */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		A282C6DA2CDA37CB0091516E /* Drinkie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Drinkie.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A282C6FD2CDA397D0091516E /* DrinkieModules */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DrinkieModules; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -19,6 +24,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A282C7002CDA3A4D0091516E /* DRAPI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -28,7 +34,9 @@
 		A282C6D12CDA37CB0091516E = {
 			isa = PBXGroup;
 			children = (
+				A282C6FD2CDA397D0091516E /* DrinkieModules */,
 				A282C6DC2CDA37CB0091516E /* Drinkie */,
+				A282C6FE2CDA3A4D0091516E /* Frameworks */,
 				A282C6DB2CDA37CB0091516E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -39,6 +47,13 @@
 				A282C6DA2CDA37CB0091516E /* Drinkie.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		A282C6FE2CDA3A4D0091516E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -61,6 +76,7 @@
 			);
 			name = Drinkie;
 			packageProductDependencies = (
+				A282C6FF2CDA3A4D0091516E /* DRAPI */,
 			);
 			productName = Drinkie;
 			productReference = A282C6DA2CDA37CB0091516E /* Drinkie.app */;
@@ -320,6 +336,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A282C6FF2CDA3A4D0091516E /* DRAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DRAPI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A282C6D22CDA37CB0091516E /* Project object */;
 }
