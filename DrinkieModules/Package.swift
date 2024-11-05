@@ -9,9 +9,11 @@ let package = Package(
     products: [
         .library(name: "DRAPI", targets: ["DRAPI"]),
         .library(name: "DRUIKit", targets: ["DRUIKit"]),
+        .library(name: "Menu", targets: ["Menu"]),
     ],
     targets: [
         .target(name: "DRAPI"),
         .target(name: "DRUIKit"),
+        .target(name: "Menu", dependencies: ["DRAPI", "DRUIKit"]),
     ]
 )
