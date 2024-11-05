@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A282C7002CDA3A4D0091516E /* DRAPI in Frameworks */ = {isa = PBXBuildFile; productRef = A282C6FF2CDA3A4D0091516E /* DRAPI */; };
+		A282C7022CDA3C8E0091516E /* DRUIKit in Frameworks */ = {isa = PBXBuildFile; productRef = A282C7012CDA3C8E0091516E /* DRUIKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A282C7002CDA3A4D0091516E /* DRAPI in Frameworks */,
+				A282C7022CDA3C8E0091516E /* DRUIKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,6 +79,7 @@
 			name = Drinkie;
 			packageProductDependencies = (
 				A282C6FF2CDA3A4D0091516E /* DRAPI */,
+				A282C7012CDA3C8E0091516E /* DRUIKit */,
 			);
 			productName = Drinkie;
 			productReference = A282C6DA2CDA37CB0091516E /* Drinkie.app */;
@@ -341,6 +344,10 @@
 		A282C6FF2CDA3A4D0091516E /* DRAPI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = DRAPI;
+		};
+		A282C7012CDA3C8E0091516E /* DRUIKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DRUIKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

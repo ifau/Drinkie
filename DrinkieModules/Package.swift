@@ -8,8 +8,10 @@ let package = Package(
     platforms: [.iOS(.v17)],
     products: [
         .library(name: "DRAPI", targets: ["DRAPI"]),
+        .library(name: "DRUIKit", targets: ["DRUIKit"]),
     ],
     targets: [
         .target(name: "DRAPI"),
+        .target(name: "DRUIKit"),
     ]
 )

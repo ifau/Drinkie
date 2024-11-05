@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import DRUIKit
 
 @main
 struct DrinkieApp: App {
@@ -13,5 +14,9 @@ struct DrinkieApp: App {
         WindowGroup {
             ContentView()
         }
+    }
+    
+    init() {
+        DRUIKit.registerFonts()
     }
 }
