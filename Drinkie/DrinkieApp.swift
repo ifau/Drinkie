@@ -10,9 +10,13 @@ import DRUIKit
 
 @main
 struct DrinkieApp: App {
+    
+    @StateObject var container = ProductionContainer()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(\.dependencyContainer, container)
         }
     }
     
