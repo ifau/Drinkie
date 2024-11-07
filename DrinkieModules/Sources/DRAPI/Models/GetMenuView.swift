@@ -62,7 +62,7 @@ public extension Model.GetMenuView {
     
     // MARK: - ProductBanner
     struct ProductBanner: Codable, Hashable {
-        public let debug: String
+        public let debug: String?
         public let productLink: ProductLink
         
         public enum CodingKeys: String, CodingKey {
@@ -73,9 +73,9 @@ public extension Model.GetMenuView {
     
     // MARK: - ProductLink
     struct ProductLink: Codable, Hashable {
-        public let debug: String
+        public let debug: String?
         public let utm: String?
-        public let status: Status
+        public let status: Status?
         public let id: String
         public let price: Double
         public let action: Action
@@ -110,7 +110,7 @@ public extension Model.GetMenuView {
     
     // MARK: - PromotionLink
     struct PromotionLink: Codable, Hashable {
-        public let debug: String
+        public let debug: String?
         public let id: String
         
         public enum CodingKeys: String, CodingKey {
@@ -126,7 +126,7 @@ public extension Model.GetMenuView {
     
     // MARK: - Section
     struct Section: Codable, Hashable {
-        public let debug: String
+        public let debug: String?
         public let title: String?
         public let blocks: [Block]
         
@@ -152,7 +152,7 @@ public extension Model.GetMenuView {
     
     // MARK: - ProductListBlock
     struct ProductListBlock: Codable, Hashable {
-        public let debug: String
+        public let debug: String?
         public let productLinks: [ProductLink]
         public let utm: String?
         public let style: ProductListBlockStyle?
@@ -173,7 +173,7 @@ public extension Model.GetMenuView {
     // MARK: - PromotionListBlock
     struct PromotionListBlock: Codable, Hashable {
         public let promotionLinks: [PromotionLink]
-        public let utm: String
+        public let utm: String?
 
         public enum CodingKeys: String, CodingKey {
             case promotionLinks = "promotionLinks"

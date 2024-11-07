@@ -12,4 +12,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+        .environment(\.dependencyContainer, PreviewContainer())
 }

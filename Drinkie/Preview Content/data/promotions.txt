@@ -1,0 +1,60 @@
+[
+  {
+    "id": "16b08526-d4a3-9783-11ef-322fd8fcfc07",
+    "code": 414,
+    "public": true,
+    "name": "- 50% off first three drinks",
+    "title": "- 50% off first three drinks",
+    "description": "Choose any drink, customize it to your liking and press 'apply', and we'll give you a 50% discount! The offer applies to the most expensive drink in the order. Each guest can only use the promotion for three orders.",
+    "banner": {
+      "images": [],
+      "videos": [
+        {
+          "url": "https://127.0.0.1/s/550b07563600435cb61718f31b75a36f.mp4",
+          "theme": "light"
+        }
+      ],
+      "preview": {
+        "url": "https://127.0.0.1/s/44618957d4a649e293e7c29790bb0e36.jpg",
+        "sizeType": "Large",
+        "width": 0,
+        "height": 0,
+        "tags": []
+      },
+      "theme": "light",
+      "type": ""
+    },
+    "images": [
+      {
+        "url": "https://127.0.0.1/s/g_1674480267_55d8fac87d0349a780452e8db72c12c7.jpeg",
+        "tags": [],
+        "theme": null,
+        "sizeType": "Large",
+        "width": 0,
+        "height": 0
+      },
+      {
+        "url": "https://127.0.0.1/s/6d752f07-4abe-433d-9bf3-d45ea1e93659.jpg",
+        "tags": [
+          "4x3"
+        ],
+        "theme": null,
+        "sizeType": "Large",
+        "width": 0,
+        "height": 0
+      }
+    ],
+    "action": {
+      "type": "Coupon",
+      "text": null,
+      "couponCode": "ZVKDPXMA9Y",
+      "link": null
+    },
+    "countLimit": 3,
+    "timeLimit": null,
+    "periodLimit": null,
+    "customProperties": [],
+    "couponCode": "ZVKDPXMA9Y",
+    "bannerPath": "https://127.0.0.1/s/g_1674480267_55d8fac87d0349a780452e8db72c12c7.jpeg"
+  }
+]

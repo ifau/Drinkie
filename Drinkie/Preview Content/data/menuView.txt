@@ -1,0 +1,398 @@
+{
+  "menuView": {
+    "unitId": "225b22c6-36a9-bf91-11ee-b022b928cacb",
+    "tabs": [
+      {
+        "id": "my",
+        "title": "my drinkit",
+        "type": "Modular",
+        "modularTab": {
+          "banner": {
+            "type": "Product",
+            "productBanner": {
+              "productLink": {
+                "id": "11eabd24-9cb3-6740-1cf8-631ca251bec0",
+                "price": 180.0,
+                "action": "ShowDetails"
+              }
+            }
+          },
+          "sections": [
+            {
+              "blocks": [
+                {
+                  "type": "PromotionList",
+                  "promotionListBlock": {
+                    "promotionLinks": [
+                      {
+                        "id": "16b08526-d4a3-9783-11ef-322fd8fcfc07"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "title": "popular drinks",
+              "blocks": [
+                {
+                  "type": "ProductList",
+                  "productListBlock": {
+                    "productLinks": [
+                      {
+                        "id": "11eabd24-9cb3-6740-1cf8-631ca251bec0",
+                        "price": 180.0,
+                        "action": "ShowDetails"
+                      },
+                      {
+                        "id": "11eac089-a475-931e-c4da-29cf3e609130",
+                        "price": 180.0,
+                        "action": "ShowDetails"
+                      },
+                      {
+                        "id": "11eabd24-9cb3-6740-1cf8-631ca251bec0",
+                        "price": 180.0,
+                        "action": "ShowDetails"
+                      },
+                      {
+                        "id": "11eac089-a475-931e-c4da-29cf3e609130",
+                        "price": 180.0,
+                        "action": "ShowDetails"
+                      },
+                      {
+                        "id": "11eabd24-9cb3-6740-1cf8-631ca251bec0",
+                        "price": 180.0,
+                        "action": "ShowDetails"
+                      },
+                      {
+                        "id": "11eac089-a475-931e-c4da-29cf3e609130",
+                        "price": 180.0,
+                        "action": "ShowDetails"
+                      }
+                    ],
+                    "style": "LongHeightCells"
+                  }
+                }
+              ]
+            },
+            {
+              "title": "new for you",
+              "blocks": [
+                {
+                  "type": "ProductList",
+                  "productListBlock": {
+                    "productLinks": [
+                      {
+                        "id": "11eddce8-ac72-8be4-e8a5-69bdbb5c86c0",
+                        "price": 160.0,
+                        "action": "AddToCart"
+                      },
+                      {
+                        "id": "11edd9e0-ab01-6568-3bb4-59e49fd56ee0",
+                        "price": 120.0,
+                        "action": "AddToCart"
+                      },
+                      {
+                        "id": "11eddce8-ac72-8be4-e8a5-69bdbb5c86c0",
+                        "price": 160.0,
+                        "action": "AddToCart"
+                      },
+                      {
+                        "id": "11edd9e0-ab01-6568-3bb4-59e49fd56ee0",
+                        "price": 120.0,
+                        "action": "AddToCart"
+                      }
+                    ],
+                    "style": "LargeVideoCells"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "jrhid",
+        "title": "with milk",
+        "type": "Modular",
+        "modularTab": {
+          "banner": {
+            "type": "Product",
+            "productBanner": {
+              "productLink": {
+                "id": "11eac089-a475-931e-c4da-29cf3e609130",
+                "price": 180.0,
+                "action": "ShowDetails"
+              }
+            }
+          },
+          "sections": [
+            {
+              "title": "classics",
+              "blocks": [
+                {
+                  "type": "ProductList",
+                  "productListBlock": {
+                    "productLinks": [
+                      {
+                        "id": "11eabd24-9cb3-6740-1cf8-631ca251bec0",
+                        "price": 180.0,
+                        "action": "ShowDetails"
+                      },
+                      {
+                        "id": "11eac089-a475-931e-c4da-29cf3e609130",
+                        "price": 180.0,
+                        "action": "ShowDetails"
+                      },
+                      {
+                        "id": "11eabd24-9cb3-6740-1cf8-631ca251bec0",
+                        "price": 180.0,
+                        "action": "ShowDetails"
+                      },
+                      {
+                        "id": "11eac089-a475-931e-c4da-29cf3e609130",
+                        "price": 180.0,
+                        "action": "ShowDetails"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "title": "cheese foam & mousse",
+              "blocks": [
+                {
+                  "type": "ProductList",
+                  "productListBlock": {
+                    "productLinks": [
+                      {
+                        "id": "11eabd24-9cb3-6740-1cf8-631ca251bec0",
+                        "price": 180.0,
+                        "action": "ShowDetails"
+                      },
+                      {
+                        "id": "11eac089-a475-931e-c4da-29cf3e609130",
+                        "price": 180.0,
+                        "action": "ShowDetails"
+                      },
+                      {
+                        "id": "11eabd24-9cb3-6740-1cf8-631ca251bec0",
+                        "price": 180.0,
+                        "action": "ShowDetails"
+                      },
+                      {
+                        "id": "11eac089-a475-931e-c4da-29cf3e609130",
+                        "price": 180.0,
+                        "action": "ShowDetails"
+                      },
+                      {
+                        "id": "11eabd24-9cb3-6740-1cf8-631ca251bec0",
+                        "price": 180.0,
+                        "action": "ShowDetails"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "xllkc",
+        "title": "food",
+        "type": "Modular",
+        "modularTab": {
+          "banner": {
+            "type": "Product",
+            "productBanner": {
+              "productLink": {
+                "id": "11eddce8-ac72-8be4-e8a5-69bdbb5c86c0",
+                "price": 160.0,
+                "action": "ShowDetails"
+              }
+            }
+          },
+          "sections": [
+            {
+              "title": "all day breakfast",
+              "blocks": [
+                {
+                  "type": "ProductList",
+                  "productListBlock": {
+                    "productLinks": [
+                      {
+                        "id": "11edd9e0-ab01-6568-3bb4-59e49fd56ee0",
+                        "price": 120.0,
+                        "action": "AddToCart"
+                      },
+                      {
+                        "id": "11eddce8-ac72-8be4-e8a5-69bdbb5c86c0",
+                        "price": 160.0,
+                        "action": "AddToCart"
+                      },
+                      {
+                        "id": "11edd9e0-ab01-6568-3bb4-59e49fd56ee0",
+                        "price": 120.0,
+                        "action": "AddToCart"
+                      },
+                      {
+                        "id": "11eddce8-ac72-8be4-e8a5-69bdbb5c86c0",
+                        "price": 160.0,
+                        "action": "AddToCart"
+                      },
+                      {
+                        "id": "11edd9e0-ab01-6568-3bb4-59e49fd56ee0",
+                        "price": 120.0,
+                        "action": "AddToCart"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "title": "oatmeal",
+              "blocks": [
+                {
+                  "type": "ProductList",
+                  "productListBlock": {
+                    "productLinks": [
+                      {
+                        "id": "11edd9e0-ab01-6568-3bb4-59e49fd56ee0",
+                        "price": 120.0,
+                        "action": "ShowDetails"
+                      }
+                    ],
+                    "style": "LargeVideoCells"
+                  }
+                }
+              ]
+            },
+            {
+              "title": "coming back soon",
+              "blocks": [
+                {
+                  "type": "ProductList",
+                  "productListBlock": {
+                    "productLinks": [
+                      {
+                        "id": "11ee68e6-b223-9995-521a-c14272590ef0",
+                        "price": 220.0,
+                        "action": "ShowDetails"
+                      },
+                      {
+                        "id": "11ee68e6-b223-9995-521a-c14272590ef0",
+                        "price": 220.0,
+                        "action": "ShowDetails"
+                      },
+                      {
+                        "id": "11ee68e6-b223-9995-521a-c14272590ef0",
+                        "price": 220.0,
+                        "action": "ShowDetails"
+                      },
+                      {
+                        "id": "11ee68e6-b223-9995-521a-c14272590ef0",
+                        "price": 220.0,
+                        "action": "ShowDetails"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "bcnhq",
+        "title": "matcha and cocoa",
+        "type": "Modular",
+        "modularTab": {
+          "banner": {
+            "type": "Product",
+            "productBanner": {
+              "productLink": {
+                "id": "11ecd476-9c27-d729-98a3-b89673a2a0b0",
+                "price": 290.0,
+                "action": "ShowDetails"
+              }
+            }
+          },
+          "sections": [
+            {
+              "title": "with milk",
+              "blocks": [
+                {
+                  "type": "ProductList",
+                  "productListBlock": {
+                    "productLinks": [
+                      {
+                        "id": "11eabd24-9cb3-6740-1cf8-631ca251bec0",
+                        "price": 180.0,
+                        "action": "ShowDetails"
+                      },
+                      {
+                        "id": "11eac089-a475-931e-c4da-29cf3e609130",
+                        "price": 180.0,
+                        "action": "ShowDetails"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "title": "cold",
+              "blocks": [
+                {
+                  "type": "ProductList",
+                  "productListBlock": {
+                    "productLinks": [
+                      {
+                        "id": "11ecd476-9c27-d729-98a3-b89673a2a0b0",
+                        "price": 290.0,
+                        "action": "ShowDetails"
+                      },
+                      {
+                        "id": "11ecd476-9c27-d729-98a3-b89673a2a0b0",
+                        "price": 290.0,
+                        "action": "ShowDetails"
+                      },
+                      {
+                        "id": "11ecd476-9c27-d729-98a3-b89673a2a0b0",
+                        "price": 290.0,
+                        "action": "ShowDetails"
+                      },
+                      {
+                        "id": "11ecd476-9c27-d729-98a3-b89673a2a0b0",
+                        "price": 290.0,
+                        "action": "ShowDetails"
+                      },
+                      {
+                        "id": "11ecd476-9c27-d729-98a3-b89673a2a0b0",
+                        "price": 290.0,
+                        "action": "ShowDetails"
+                      },
+                      {
+                        "id": "11ecd476-9c27-d729-98a3-b89673a2a0b0",
+                        "price": 290.0,
+                        "action": "ShowDetails"
+                      },
+                      {
+                        "id": "11ecd476-9c27-d729-98a3-b89673a2a0b0",
+                        "price": 290.0,
+                        "action": "ShowDetails"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
