@@ -86,9 +86,12 @@ final class MenuView: UIView {
             addSubview(overlayView!)
             
         case .loaded(let menuView):
-            overlayView?.removeFromSuperview()
             self.tabs = menuView.tabs
             self.reloadTabs()
+            UIView.animate(withDuration: 0.5,
+                           animations: { self.overlayView?.alpha = 0.0 },
+                           completion: { _ in self.overlayView?.removeFromSuperview() }
+            )
         }
     }
     

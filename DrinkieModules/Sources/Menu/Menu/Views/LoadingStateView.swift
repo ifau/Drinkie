@@ -96,20 +96,19 @@ final class LoadingStateView: UIView {
         activateConstraints()
         
         layer.addSublayer(animationLayer)
+        
+        registerForTraitChanges([UITraitUserInterfaceStyle.self], handler: { (self: Self, previousTraitCollection: UITraitCollection) in
+            
+            let gradientColorOne = AppColor.textPrimary.value.withAlphaComponent(0.05).cgColor
+            let gradientColorTwo = AppColor.textPrimary.value.withAlphaComponent(0.1).cgColor
+            self.animationLayer.colors = [gradientColorOne, gradientColorTwo, gradientColorOne]
+        })
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         animationLayer.frame = frame
         animationLayer.mask = contentView.layer
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        let gradientColorOne = AppColor.textPrimary.value.withAlphaComponent(0.05).cgColor
-        let gradientColorTwo = AppColor.textPrimary.value.withAlphaComponent(0.1).cgColor
-        animationLayer.colors = [gradientColorOne, gradientColorTwo, gradientColorOne]
     }
     
     private func activateConstraints() {
