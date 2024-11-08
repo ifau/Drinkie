@@ -74,8 +74,6 @@ class DefaultPromotionCell: UICollectionViewCell {
             actionButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Spacing.large.value),
             actionButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Spacing.large.value)
         ])
-        
-        imageView.isHidden = true
     }
     
     required init?(coder: NSCoder) { fatalError() }

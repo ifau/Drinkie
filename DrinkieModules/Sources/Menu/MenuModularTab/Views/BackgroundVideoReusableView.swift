@@ -85,14 +85,18 @@ class BackgroundVideoReusableView: UICollectionReusableView {
 
             let previewImage = try? await loadBannerPreviewImage()
             guard !Task.isCancelled else { return }
-            mediaView.showImage(previewImage, contentMode: .scaleAspectFill)
+            
+            if let previewImage {
+                mediaViewAspectRatio = previewImage.size.height / previewImage.size.width
+                mediaView.showImage(previewImage, contentMode: .scaleAspectFill)
+            }
             
             let localVideoURL = try? await loadBannerVideo()
             guard !Task.isCancelled else { return }
             
             if let localVideoURL {
                 mediaView.showImage(nil)
-                mediaView.showVideo(url: localVideoURL)
+                mediaView.showVideo(url: localVideoURL, videoGravity: .resizeAspectFill)
                 mediaView.resumeVideoPlayback()
             }
         }
