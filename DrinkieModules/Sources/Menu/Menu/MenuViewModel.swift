@@ -52,7 +52,7 @@ final class MenuViewModel {
             switch event {
             case .viewDidAppear: self?.tryLoadMenu()
             case .tryAgainButtonPressed: self?.tryLoadMenu()
-            case .productLinkTap(let productLink): ()
+            case .productLinkTap(let productLink): self?.handleProductLinkTap(productLink: productLink)
             case .promotionLinkTap(let promotionLink): ()
             }
         }
@@ -105,6 +105,15 @@ private extension MenuViewModel {
         
         return hasPromoBanners || hasPromoSections
     }
+    
+    func handleProductLinkTap(productLink: ProductLink) {
+        guard isAvailable(productLink) else { return }
+        
+        guard let item = getMenuResponse?.items.first(where: { $0.products.contains(where: { $0.id == productLink.id })}) else { return }
+        guard let product = item.products.first(where: { $0.id == productLink.id }) else { return }
+        
+        dependencies.navigateToProductDetails(product, item.products)
+    }
 }
 
 extension MenuViewModel: MenuViewAttributesProvider {
@@ -112,9 +121,6 @@ extension MenuViewModel: MenuViewAttributesProvider {
         
         guard let getMenuResponse else { return nil }
         guard let item = getMenuResponse.items.flatMap({ $0.products }).first(where: { $0.id == productLink.id }) else { return nil }
-        
-        let inStopList = getStopsResponse?.products.first(where: { $0.productID == productLink.id }) != nil
-        let stocksQuantity = getStopsResponse?.productStocks.first(where: { $0.productID == productLink.id })?.quantity ?? Int.max
         
         let loadImage: (_ size: CGSize) async throws -> UIImage? = { [weak self] size in
             return try await self?.image(templateURL: item.imageURLTemplate, size: size)
@@ -133,7 +139,7 @@ extension MenuViewModel: MenuViewAttributesProvider {
         // TODO: Remove hardcoded currency
         return ProductLinkAttributes(localizedTitle: item.name,
                                      localizedPrice: "RUB \(productLink.price.formatted())",
-                                     isAvailable: !(inStopList || stocksQuantity == 0),
+                                     isAvailable: isAvailable(productLink),
                                      loadImage: loadImage,
                                      loadBannerPreviewImage: loadBannerPreviewImage,
                                      loadBannerVideo: loadBannerVideo)
@@ -197,5 +203,15 @@ extension MenuViewModel: MenuViewAttributesProvider {
             return image
         }
         throw URLError(URLError.badURL)
+    }
+    
+    private func isAvailable(_ productLink: ProductLink) -> Bool {
+        
+        guard let getStopsResponse else { return true }
+        
+        let inStopList = getStopsResponse.products.first(where: { $0.productID == productLink.id }) != nil
+        let stocksQuantity = getStopsResponse.productStocks.first(where: { $0.productID == productLink.id })?.quantity ?? Int.max
+        
+        return !(inStopList || stocksQuantity == 0)
     }
 }

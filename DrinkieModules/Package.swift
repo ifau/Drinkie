@@ -10,10 +10,12 @@ let package = Package(
         .library(name: "DRAPI", targets: ["DRAPI"]),
         .library(name: "DRUIKit", targets: ["DRUIKit"]),
         .library(name: "Menu", targets: ["Menu"]),
+        .library(name: "ProductDetails", targets: ["ProductDetails"])
     ],
     targets: [
         .target(name: "DRAPI"),
         .target(name: "DRUIKit"),
         .target(name: "Menu", dependencies: ["DRAPI", "DRUIKit"]),
+        .target(name: "ProductDetails", dependencies: ["DRAPI", "DRUIKit"])
     ]
 )

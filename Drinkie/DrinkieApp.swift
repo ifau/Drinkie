@@ -11,7 +11,8 @@ import DRUIKit
 @main
 struct DrinkieApp: App {
     
-    @StateObject var container = ProductionContainer()
+    @StateObject var container = PreviewContainer()
+    // @StateObject var container = ProductionContainer()
     
     var body: some Scene {
         WindowGroup {

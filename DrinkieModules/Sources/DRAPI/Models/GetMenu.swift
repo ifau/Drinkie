@@ -75,7 +75,7 @@ public extension Model.GetMenu {
     }
     
     // MARK: - Product
-    struct Product: Codable, Hashable {
+    struct Product: Codable, Hashable, Identifiable {
         public let id: String
         public let code: Int
         public let name: String
@@ -273,6 +273,14 @@ public extension Model.GetMenu {
             case carbohydrates = "carbohydrates"
             case kiloCalories = "kiloCalories"
             case weight = "weight"
+        }
+        
+        public init(fats: Double?, proteins: Double?, carbohydrates: Double?, kiloCalories: Double?, weight: Double?) {
+            self.fats = fats
+            self.proteins = proteins
+            self.carbohydrates = carbohydrates
+            self.kiloCalories = kiloCalories
+            self.weight = weight
         }
     }
     

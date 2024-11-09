@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A207E2F72CDC36AD0020F3BE /* ProductDetails in Frameworks */ = {isa = PBXBuildFile; productRef = A207E2F62CDC36AD0020F3BE /* ProductDetails */; };
 		A282C7002CDA3A4D0091516E /* DRAPI in Frameworks */ = {isa = PBXBuildFile; productRef = A282C6FF2CDA3A4D0091516E /* DRAPI */; };
 		A282C7022CDA3C8E0091516E /* DRUIKit in Frameworks */ = {isa = PBXBuildFile; productRef = A282C7012CDA3C8E0091516E /* DRUIKit */; };
 		A282C7042CDA4E270091516E /* Menu in Frameworks */ = {isa = PBXBuildFile; productRef = A282C7032CDA4E270091516E /* Menu */; };
@@ -27,6 +28,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A282C7002CDA3A4D0091516E /* DRAPI in Frameworks */,
+				A207E2F72CDC36AD0020F3BE /* ProductDetails in Frameworks */,
 				A282C7022CDA3C8E0091516E /* DRUIKit in Frameworks */,
 				A282C7042CDA4E270091516E /* Menu in Frameworks */,
 			);
@@ -83,6 +85,7 @@
 				A282C6FF2CDA3A4D0091516E /* DRAPI */,
 				A282C7012CDA3C8E0091516E /* DRUIKit */,
 				A282C7032CDA4E270091516E /* Menu */,
+				A207E2F62CDC36AD0020F3BE /* ProductDetails */,
 			);
 			productName = Drinkie;
 			productReference = A282C6DA2CDA37CB0091516E /* Drinkie.app */;
@@ -344,6 +347,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		A207E2F62CDC36AD0020F3BE /* ProductDetails */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ProductDetails;
+		};
 		A282C6FF2CDA3A4D0091516E /* DRAPI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = DRAPI;
