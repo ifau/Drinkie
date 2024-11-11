@@ -49,7 +49,7 @@ class DefaultPromotionCell: UICollectionViewCell {
         super.init(frame: frame)
         
         contentView.roundCorners(by: CornerRadius.extraLarge.value)
-        contentView.backgroundColor = AppColor.brandSecondary.value
+        contentView.backgroundColor = AppColor.brandTertiary.value
         contentView.addSubview(imageView)
         contentView.addSubview(titleLabel)
         contentView.addSubview(actionButton)

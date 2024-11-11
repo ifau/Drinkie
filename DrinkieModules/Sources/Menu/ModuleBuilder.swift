@@ -13,13 +13,15 @@ public enum MenuModule {
         public var fetchStops: () async throws -> DRAPI.Model.GetStops.Response
         public var downloadURL: (_ remoteURL : URL) async throws -> URL
         public var navigateToProductDetails: (_ product: DRAPI.Model.GetMenu.Product, _ relatedProducts: [DRAPI.Model.GetMenu.Product]) -> Void
+        public var navigateToSelectStoreUnit: () -> Void
         
         public init(fetchMenuView: @escaping () async throws -> DRAPI.Model.GetMenuView.Response,
                     fetchMenu: @escaping () async throws -> DRAPI.Model.GetMenu.Response,
                     fetchPromotions: @escaping () async throws -> DRAPI.Model.GetPromotions.Response,
                     fetchStops: @escaping () async throws -> DRAPI.Model.GetStops.Response,
                     downloadURL: @escaping (_: URL) async throws -> URL,
-                    navigateToProductDetails: @escaping (DRAPI.Model.GetMenu.Product, [DRAPI.Model.GetMenu.Product]) -> Void) {
+                    navigateToProductDetails: @escaping (DRAPI.Model.GetMenu.Product, [DRAPI.Model.GetMenu.Product]) -> Void,
+                    navigateToSelectStoreUnit: @escaping () -> Void) {
             
             self.fetchMenuView = fetchMenuView
             self.fetchMenu = fetchMenu
@@ -27,6 +29,7 @@ public enum MenuModule {
             self.fetchStops = fetchStops
             self.downloadURL = downloadURL
             self.navigateToProductDetails = navigateToProductDetails
+            self.navigateToSelectStoreUnit = navigateToSelectStoreUnit
         }
     }
     

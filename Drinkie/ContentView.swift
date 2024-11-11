@@ -2,11 +2,13 @@ import SwiftUI
 import DRAPI
 import Menu
 import ProductDetails
+import SelectStoreUnit
 
 struct ContentView: View {
     
     @Environment(\.dependencyContainer) var container
     @State var productDetails: ProductDetailsPresentation?
+    @State var selectStoreUnitPresented: Bool = false
     
     var body: some View {
         MenuModule.rootView(dependencies: .init(fetchMenuView: container.resolve(),
@@ -14,7 +16,8 @@ struct ContentView: View {
                                                 fetchPromotions: container.resolve(),
                                                 fetchStops: container.resolve(),
                                                 downloadURL: container.resolve(),
-                                                navigateToProductDetails: { productDetails = .init(product: $0, relatedProducts: $1) }
+                                                navigateToProductDetails: { productDetails = .init(product: $0, relatedProducts: $1) },
+                                                navigateToSelectStoreUnit: { selectStoreUnitPresented = true }
                                                )
         )
         .ignoresSafeArea()
@@ -25,6 +28,14 @@ struct ContentView: View {
                                                               fetchStops: container.resolve())
             )
             .ignoresSafeArea()
+        }
+        .fullScreenCover(isPresented: $selectStoreUnitPresented) {
+            SelectStoreUnitModule.rootView(dependencies: .init(selectedUnitId: "",
+                                                               downloadURL: container.resolve(),
+                                                               fetchChain: container.resolve(),
+                                                               dismissPresentation: { selectStoreUnitPresented = false }
+                                                              )
+            )
         }
     }
 }

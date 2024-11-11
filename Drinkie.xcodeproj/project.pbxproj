@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A207E2F72CDC36AD0020F3BE /* ProductDetails in Frameworks */ = {isa = PBXBuildFile; productRef = A207E2F62CDC36AD0020F3BE /* ProductDetails */; };
+		A207E47D2CDFAD010020F3BE /* SelectStoreUnit in Frameworks */ = {isa = PBXBuildFile; productRef = A207E47C2CDFAD010020F3BE /* SelectStoreUnit */; };
 		A282C7002CDA3A4D0091516E /* DRAPI in Frameworks */ = {isa = PBXBuildFile; productRef = A282C6FF2CDA3A4D0091516E /* DRAPI */; };
 		A282C7022CDA3C8E0091516E /* DRUIKit in Frameworks */ = {isa = PBXBuildFile; productRef = A282C7012CDA3C8E0091516E /* DRUIKit */; };
 		A282C7042CDA4E270091516E /* Menu in Frameworks */ = {isa = PBXBuildFile; productRef = A282C7032CDA4E270091516E /* Menu */; };
@@ -31,6 +32,7 @@
 				A207E2F72CDC36AD0020F3BE /* ProductDetails in Frameworks */,
 				A282C7022CDA3C8E0091516E /* DRUIKit in Frameworks */,
 				A282C7042CDA4E270091516E /* Menu in Frameworks */,
+				A207E47D2CDFAD010020F3BE /* SelectStoreUnit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,6 +88,7 @@
 				A282C7012CDA3C8E0091516E /* DRUIKit */,
 				A282C7032CDA4E270091516E /* Menu */,
 				A207E2F62CDC36AD0020F3BE /* ProductDetails */,
+				A207E47C2CDFAD010020F3BE /* SelectStoreUnit */,
 			);
 			productName = Drinkie;
 			productReference = A282C6DA2CDA37CB0091516E /* Drinkie.app */;
@@ -350,6 +353,10 @@
 		A207E2F62CDC36AD0020F3BE /* ProductDetails */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ProductDetails;
+		};
+		A207E47C2CDFAD010020F3BE /* SelectStoreUnit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SelectStoreUnit;
 		};
 		A282C6FF2CDA3A4D0091516E /* DRAPI */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -25,6 +25,7 @@ final class MenuViewModel {
     enum Event {
         case viewDidAppear
         case tryAgainButtonPressed
+        case storeUnitButtonPressed
         case productLinkTap(ProductLink)
         case promotionLinkTap(PromotionLink)
     }
@@ -52,6 +53,7 @@ final class MenuViewModel {
             switch event {
             case .viewDidAppear: self?.tryLoadMenu()
             case .tryAgainButtonPressed: self?.tryLoadMenu()
+            case .storeUnitButtonPressed: self?.dependencies.navigateToSelectStoreUnit()
             case .productLinkTap(let productLink): self?.handleProductLinkTap(productLink: productLink)
             case .promotionLinkTap(let promotionLink): ()
             }

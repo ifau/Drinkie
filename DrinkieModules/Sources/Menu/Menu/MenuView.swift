@@ -47,6 +47,11 @@ final class MenuView: UIView {
         return view
     }()
     
+    private lazy var storeUnitView: StoreUnitView = {
+        let view = StoreUnitView()
+        return view
+    }()
+    
     // MARK: Required methods
     
     init() {
@@ -54,6 +59,10 @@ final class MenuView: UIView {
         addSubview(pageViewController.view)
         addSubview(selectedTabIndicatorViewBackground)
         addSubview(selectedTabIndicatorView)
+        addSubview(storeUnitView)
+        
+        storeUnitView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didReceiveTapOnStoreUnitView)))
+        storeUnitView.isUserInteractionEnabled = true
     }
     
     required init?(coder: NSCoder) { fatalError() }
@@ -63,6 +72,7 @@ final class MenuView: UIView {
         pageViewController.view.frame = bounds
         overlayView?.frame = bounds
         recalculateSelectedTabIndicatorFrame()
+        recalculateStoreUnitFrame()
         
         let selectedTabIndicatorViewBackgroundHeight = max(Constants.selectedTabIndicatorMinimumHeight, selectedTabIndicatorView.contentSize.height) + safeAreaInsets.top + Spacing.small.value
         selectedTabIndicatorViewBackground.frame = CGRect(x: 0, y: 0, width: bounds.width, height: selectedTabIndicatorViewBackgroundHeight)
@@ -114,12 +124,21 @@ final class MenuView: UIView {
     private func createTabController(tab: Tab) -> MenuModularTabViewController {
         let viewController = MenuModularTabViewController(id: tab.id, tabData: tab.modularTab)
         viewController.scrollOffsetChangedHandler = { [weak self] offset in
+            self?.recalculateStoreUnitFrame()
             self?.recalculateSelectedTabIndicatorFrame()
             self?.tabsOffsetCache[tab.id] = offset
         }
         viewController.onEvent = onEvent
         viewController.attributesProvider = attributesProvider
         return viewController
+    }
+    
+    private func recalculateStoreUnitFrame() {
+        let activeTabOffset = visibleTabViewController?.scrollViewOffset ?? .zero
+        let defaultOffset = safeAreaInsets.top + Spacing.small.value
+        let origin = CGPoint(x: Spacing.medium.value, y: min(defaultOffset - activeTabOffset.y, defaultOffset))
+        
+        storeUnitView.frame = CGRect(origin: origin, size: storeUnitView.intrinsicContentSize)
     }
     
     private func recalculateSelectedTabIndicatorFrame() {
@@ -210,5 +229,12 @@ extension MenuView: SelectedTabIndicatorViewDelegate {
                 selectedTabViewController.scrollOffsetChangedHandler = oldHandler
             }
         }
+    }
+}
+
+extension MenuView {
+    
+    @objc func didReceiveTapOnStoreUnitView() {
+        onEvent?(.storeUnitButtonPressed)
     }
 }

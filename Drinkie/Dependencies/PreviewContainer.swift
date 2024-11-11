@@ -27,6 +27,10 @@ final class PreviewContainer: DependencyContainer {
             try decodeFromBundle(filename: "stops", withExtension: "txt")
         }
         
+        let fetchChain: () async throws -> DRAPI.Model.GetChain.Response = { [unowned self] in
+            try decodeFromBundle(filename: "chain", withExtension: "txt")
+        }
+        
         let downloadURL: (_ remoteURL : URL) async throws -> URL = { url in
             let lastPathComponents = url.lastPathComponent.components(separatedBy: ".")
             
@@ -44,6 +48,7 @@ final class PreviewContainer: DependencyContainer {
         register(factory: { fetchMenu })
         register(factory: { fetchPromotions })
         register(factory: { fetchStops })
+        register(factory: { fetchChain })
         register(factory: { downloadURL })
     }
     

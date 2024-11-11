@@ -5,6 +5,7 @@ public enum Model {
     public enum GetMenu { }
     public enum GetPromotions { }
     public enum GetStops { }
+    public enum GetChain { }
 }
 
 extension Model.GetMenu.Group: Identifiable {
