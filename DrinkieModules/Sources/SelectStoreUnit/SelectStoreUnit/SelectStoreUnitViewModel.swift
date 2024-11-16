@@ -7,7 +7,7 @@ final class SelectStoreUnitViewModel: ObservableObject {
     enum State {
         case notRequested
         case loading
-        case loaded([UnitModel], closeEnabled: Bool)
+        case loaded([UnitModel], [DRAPI.Model.GetChain.Country], closeEnabled: Bool)
         case failed(Error)
     }
     
@@ -31,7 +31,10 @@ final class SelectStoreUnitViewModel: ObservableObject {
         case .task: loadStoreUnits()
         case .tryAgainButtonPressed: loadStoreUnits()
         case .closeButtonPressed: dependencies.dismissPresentation()
-        case .selectedUnit(let unit): dependencies.dismissPresentation()
+        case .selectedUnit(let unit):
+            guard case let .loaded(_, countries, _) = state else { return }
+            guard let country = countries.first(where: { $0.id == unit.unit.countryID }) else { return }
+            dependencies.selectionHandler(unit.unit, country)
         }
     }
 }
@@ -48,7 +51,7 @@ private extension SelectStoreUnitViewModel {
                 state = .loading
                 let chain = try await dependencies.fetchChain()
                 let closeEnabled = dependencies.selectedUnitId != nil
-                state = .loaded(chain.storeUnits.map(self.map(responseUnit:)), closeEnabled: closeEnabled)
+                state = .loaded(chain.storeUnits.map(self.map(responseUnit:)), chain.countries, closeEnabled: closeEnabled)
             } catch {
                 state = .failed(error)
             }
@@ -70,86 +73,38 @@ private extension SelectStoreUnitViewModel {
 
 struct UnitModel {
     let unit: DRAPI.Model.GetChain.StoreUnit
-    
     let pictures: [UnitPicture]
     let isSelected: Bool
-    let isOpen: Bool
-    let openDescription: String
-    
-    init(unit: DRAPI.Model.GetChain.StoreUnit,
-         pictures: [UnitPicture],
-         isSelected: Bool,
-         calendar: Calendar = Calendar.current,
-         nowDate: Date = Date.now) {
-        self.unit = unit
-        self.pictures = pictures
-        self.isSelected = isSelected
-        
-        let days: [DRAPI.Model.GetChain.DayEnum] = [.sunday, .monday, .tuesday, .wednesday, .thursday, .friday, .saturday]
-        let currentHour = calendar.component(.hour, from: nowDate)
-        let currentMinute = calendar.component(.minute, from: nowDate)
-        let currentDay = days[(calendar.dateComponents([.weekday], from: nowDate).weekday ?? 1) - 1]
-        
-        func minutes(hour: Int, minutes: Int) -> Int { return hour * 60 + minutes }
-        
-        func nextDay() -> DRAPI.Model.GetChain.DayElement? {
-            let reorderedDays = days.split(separator: currentDay, maxSplits: 2).reversed().flatMap { $0 }
-            for day in reorderedDays {
-                if let nextDay = unit.schedule.days.first(where: { $0.day == day && $0.period != nil }) {
-                    return nextDay
-                }
-            }
-            return nil
-        }
-        
-        // TODO: - Handle localisation
-        func shortWeekLabel(_ day: DRAPI.Model.GetChain.DayEnum) -> String {
-            String(day.rawValue.lowercased().prefix(3))
-        }
-        
-        // TODO: rewrite without so many else branches
-        if let currentDaySchedule = unit.schedule.days.first(where: { $0.day == currentDay }),
-           let start = currentDaySchedule.period?.start,
-           let end = currentDaySchedule.period?.end {
-            if minutes(hour: currentHour, minutes: currentMinute) < minutes(hour: start.hour, minutes: start.minute) {
-                let hour = start.hour.formatted(.number.precision(.integerLength(2)))
-                let minute = start.minute.formatted(.number.precision(.integerLength(2)))
-                self.isOpen = false
-                self.openDescription = "open today at \(hour):\(minute)"
-            } else if minutes(hour: currentHour, minutes: currentMinute) < minutes(hour: end.hour, minutes: end.minute) {
-                let hour = end.hour.formatted(.number.precision(.integerLength(2)))
-                let minute = end.minute.formatted(.number.precision(.integerLength(2)))
-                self.isOpen = true
-                self.openDescription = "till \(hour):\(minute)"
-            } else {
-                self.isOpen = false
-                if let nextDay = nextDay(), let start = nextDay.period?.start {
-                    let hour = start.hour.formatted(.number.precision(.integerLength(2)))
-                    let minute = start.minute.formatted(.number.precision(.integerLength(2)))
-                    self.openDescription = "open \(shortWeekLabel(nextDay.day)) at \(hour):\(minute)"
-                } else {
-                    self.openDescription = ""
-                }
-            }
-        } else {
-            self.isOpen = false
-            if let nextDay = nextDay(), let start = nextDay.period?.start {
-                let hour = start.hour.formatted(.number.precision(.integerLength(2)))
-                let minute = start.minute.formatted(.number.precision(.integerLength(2)))
-                self.openDescription = "open \(shortWeekLabel(nextDay.day)) at \(hour):\(minute)"
-            } else {
-                self.openDescription = ""
-            }
-        }
-    }
-    
-    var alias: String { unit.alias }
-    var address: String { unit.address.text ?? "" }
-    var orientation: String { unit.orientation }
 }
 
 extension UnitModel: Hashable, Identifiable {
     var id: String { unit.id }
+    var alias: String { unit.alias }
+    var address: String { unit.address.text ?? "" }
+    var orientation: String { unit.orientation }
+    
+    var isOpen: Bool {
+        guard case .openUntil = unit.schedule.openStatus(relaitiveTo: .now) else { return false }
+        return true
+    }
+    
+    var openDescription: String {
+        // TODO: handle localisation
+        switch unit.schedule.openStatus(relaitiveTo: .now) {
+        case .openUntil(_, let time):
+            let hour = time.hour.formatted(.number.precision(.integerLength(2)))
+            let minutes = time.minute.formatted(.number.precision(.integerLength(2)))
+            return "till \(hour):\(minutes)"
+            
+        case .closedUntil(let day, let time):
+            let hour = time.hour.formatted(.number.precision(.integerLength(2)))
+            let minutes = time.minute.formatted(.number.precision(.integerLength(2)))
+            let shortWeekDay = day.rawValue.lowercased().prefix(3)
+            return "open \(shortWeekDay) at \(hour):\(minutes)"
+            
+        case .unknown: return "closed"
+        }
+    }
 }
 
 struct UnitPicture: Hashable, Identifiable {

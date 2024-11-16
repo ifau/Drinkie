@@ -25,7 +25,7 @@ public struct SelectStoreUnitView: View {
         case .failed(let error):
             GenericErrorView(error: error, tryAgainAction: { viewModel.onEvent(.tryAgainButtonPressed) })
             
-        case .loaded(let units, let closeEnabled):
+        case .loaded(let units, _, let closeEnabled):
             ZStack {
                 switch selectedDisplayStyle {
                 case .map:
@@ -39,11 +39,17 @@ public struct SelectStoreUnitView: View {
             }
             .animation(.default, value: selectedDisplayStyle)
             .sheet(item: $unitDetails) { unit in
-                UnitDetailsView(unit: unit, actionButtonHandler: { viewModel.onEvent(.selectedUnit(unit)) } )
-                    .presentationCornerRadius(32)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .modifier(GetHeightModifier(height: $unitDetailsSheetHeight))
-                    .presentationDetents([.height(unitDetailsSheetHeight)])
+                UnitDetailsView(unit: unit, actionButtonHandler: {
+                    // Close sheet and inform model about selection with a little delay to have a smooth animation
+                    unitDetails = nil
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
+                        viewModel.onEvent(.selectedUnit(unit))
+                    }
+                })
+                .presentationCornerRadius(32)
+                .fixedSize(horizontal: false, vertical: true)
+                .modifier(GetHeightModifier(height: $unitDetailsSheetHeight))
+                .presentationDetents([.height(unitDetailsSheetHeight)])
             }
             .overlay(alignment: .top) {
                 HStack {

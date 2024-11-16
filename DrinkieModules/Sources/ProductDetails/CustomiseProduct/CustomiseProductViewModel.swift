@@ -9,6 +9,7 @@ extension CustomiseProductViewModel {
         case didSelectIngredient(MutableIngredient)
         case didSelectQuantity(MutableQuantity)
         case didSelectProduct(Product?)
+        case didReceiveCurrency(DRAPI.Model.GetChain.Currency?)
     }
     
     struct OutputState {
@@ -24,6 +25,10 @@ final class CustomiseProductViewModel {
         return OutputState(groupsPublisher: groupsSubject.eraseToAnyPublisher(),
                            selectedIngredientsPublisher: selectedIngredientsSubject.eraseToAnyPublisher())
     }()
+    
+    private var currency: DRAPI.Model.GetChain.Currency? {
+        didSet { didReceiveCurrency() }
+    }
     
     private var subscriptions: [AnyCancellable] = []
     private let groupsSubject = CurrentValueSubject<[MutableCompositionGroup], Never>([])
@@ -43,6 +48,7 @@ final class CustomiseProductViewModel {
             case .didSelectIngredient(let ingredient): didSelectIngredient(ingredient)
             case .didSelectQuantity(let quantity): didSelectQuantity(quantity)
             case .didSelectProduct(let product): reset(withGroups: product?.composition?.groups ?? [])
+            case .didReceiveCurrency(let currency): self.currency = currency
             }
         }
         .store(in: &subscriptions)
@@ -106,6 +112,7 @@ final class CustomiseProductViewModel {
                                              quantity: quantityVariant,
                                              isSelected: isSelected,
                                              isAvailable: true,
+                                             currency: currency?.isoAlpha3,
                                              loadImage: loadImage)
                 }
             
@@ -164,6 +171,23 @@ final class CustomiseProductViewModel {
                 
                 var updatedIngredient = ingredient
                 updatedIngredient.quantity = quantityVariation
+                return updatedIngredient
+            }
+            
+            return updatedGroup
+        }
+        
+        groupsSubject.send(updatedGroups)
+    }
+    
+    func didReceiveCurrency() {
+        let updatedGroups = groupsSubject.value.map { mutableGroup in
+            
+            var updatedGroup = mutableGroup
+            updatedGroup.ingredients = updatedGroup.ingredients.map { ingredient in
+
+                var updatedIngredient = ingredient
+                updatedIngredient.currency = currency?.isoAlpha3
                 return updatedIngredient
             }
             
@@ -264,15 +288,18 @@ extension MutableCompositionGroup: CompositionGroupCellModel {
         return ingredient.name
     }
     
-    // TODO: remove hardcoded currency
     var localizedPrice: String {
+        let currency = ingredients.first?.currency ?? ""
         let groupPrice = ingredients.filter { $0.isSelected }.reduce(into: 0, { $0 += $1.quantity.price })
-        return groupPrice > 0 ? "RUB \(groupPrice)" : ""
+        return groupPrice > 0 ? "\(currency) \(groupPrice)" : ""
     }
 }
 
 extension MutableIngredient: IngredientCellModel {
     
     var localizedTitle: String { ingredient.name }
-    var localizedSubtitle: String { quantity.price > 0 ? "+RUB \(quantity.price)" : "RUB 0" }
+    var localizedSubtitle: String {
+        let currency = self.currency ?? ""
+        return quantity.price > 0 ? "+\(currency) \(quantity.price)" : "\(currency) 0"
+    }
 }

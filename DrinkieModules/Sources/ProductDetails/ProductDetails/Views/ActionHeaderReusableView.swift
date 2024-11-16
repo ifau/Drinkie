@@ -1,5 +1,6 @@
 import UIKit
 import DRUIKit
+import DRAPI
 import SwiftUI
 
 class ActionHeaderReusableView: UICollectionReusableView {
@@ -52,6 +53,7 @@ class ActionHeaderReusableView: UICollectionReusableView {
 class ActionHeaderViewModel: ObservableObject {
     
     @Published var totalPrice: Int
+    @Published var currency: DRAPI.Model.GetChain.Currency?
     @Published var selectedProduct: Product?
     @Published var allProducts: [Product]
     
@@ -162,7 +164,7 @@ struct ActionHeaderView: View {
     }
     
     var priceLabel: some View {
-        Text("RUB \(viewModel.totalPrice)")
+        Text("\(viewModel.currency?.isoAlpha3 ?? "") \(viewModel.totalPrice)")
             .font(AppFont.relative(.regular, size: 20, relativeTo: .headline))
     }
     

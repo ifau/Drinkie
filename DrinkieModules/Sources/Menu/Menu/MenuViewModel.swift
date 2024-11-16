@@ -12,13 +12,15 @@ typealias ProductListBlock = DRAPI.Model.GetMenuView.ProductListBlock
 typealias PromotionBanner = DRAPI.Model.GetMenuView.PromotionBanner
 typealias PromotionLink = DRAPI.Model.GetMenuView.PromotionLink
 typealias PromotionListBlock = DRAPI.Model.GetMenuView.PromotionListBlock
+typealias StoreUnit = DRAPI.Model.GetChain.StoreUnit
+typealias Currency = DRAPI.Model.GetChain.Currency
 
 final class MenuViewModel {
     
     enum State {
         case notRequested
         case loading
-        case loaded(DRAPI.Model.GetMenuView.MenuView)
+        case loaded(DRAPI.Model.GetMenuView.MenuView, StoreUnit)
         case failed(Error)
     }
     
@@ -28,6 +30,7 @@ final class MenuViewModel {
         case storeUnitButtonPressed
         case productLinkTap(ProductLink)
         case promotionLinkTap(PromotionLink)
+        case storeUnitChanged((unit: StoreUnit, currency: Currency)?)
     }
     
     var state: AnyPublisher<State, Never> { stateSubject.eraseToAnyPublisher() }
@@ -37,6 +40,8 @@ final class MenuViewModel {
     private var getMenuResponse: DRAPI.Model.GetMenu.Response?
     private var getPromotionsResponse: DRAPI.Model.GetPromotions.Response?
     private var getStopsResponse: DRAPI.Model.GetStops.Response?
+    private var storeUnit: StoreUnit?
+    private var currency: Currency?
     
     private var getMenuTask: Task<Void, Never>?
     private var subscriptions: [AnyCancellable] = []
@@ -49,13 +54,19 @@ final class MenuViewModel {
     }
     
     private func createInputSubscription() {
-        input.sink { [weak self] event in
-            switch event {
-            case .viewDidAppear: self?.tryLoadMenu()
-            case .tryAgainButtonPressed: self?.tryLoadMenu()
-            case .storeUnitButtonPressed: self?.dependencies.navigateToSelectStoreUnit()
-            case .productLinkTap(let productLink): self?.handleProductLinkTap(productLink: productLink)
-            case .promotionLinkTap(let promotionLink): ()
+        let storeUnitChangedSignal = dependencies.selectedStoreUnit.map { Event.storeUnitChanged($0) }
+        
+        input
+            .merge(with: storeUnitChangedSignal)
+            .sink { [weak self] event in
+                guard let self else { return }
+                switch event {
+                case .viewDidAppear: tryLoadMenu()
+                case .tryAgainButtonPressed: tryLoadMenu()
+                case .storeUnitButtonPressed: dependencies.navigateToSelectStoreUnit()
+                case .productLinkTap(let productLink): handleProductLinkTap(productLink: productLink)
+                case .promotionLinkTap(let promotionLink): ()
+                case .storeUnitChanged(let storeUnitDescription): storeUnitChanged(storeUnitDescription)
             }
         }
         .store(in: &subscriptions)
@@ -64,9 +75,17 @@ final class MenuViewModel {
 
 private extension MenuViewModel {
     
+    func storeUnitChanged(_ storeUnitDescription:(unit: StoreUnit, currency: Currency)?) {
+        storeUnit = storeUnitDescription?.unit
+        currency = storeUnitDescription?.currency
+        getMenuTask?.cancel()
+        getMenuTask = nil
+        tryLoadMenu()
+    }
+    
     func tryLoadMenu() {
         guard getMenuTask == nil else { return }
-        guard getMenuResponse == nil || getMenuViewResponse == nil else { return }
+        guard let storeUnit, let _ = currency else { return }
         
         getMenuTask = Task {
             defer { getMenuTask = nil }
@@ -85,7 +104,7 @@ private extension MenuViewModel {
                     self.getPromotionsResponse = try await dependencies.fetchPromotions()
                 }
                 
-                stateSubject.send(.loaded(menuViewResponse.menuView))
+                stateSubject.send(.loaded(menuViewResponse.menuView, storeUnit))
             } catch {
                 stateSubject.send(.failed(error))
             }
@@ -138,9 +157,10 @@ extension MenuViewModel: MenuViewAttributesProvider {
             return try await self?.dependencies.downloadURL(previewURL)
         }
         
-        // TODO: Remove hardcoded currency
+        let priceString = [currency?.isoAlpha3, productLink.price.formatted()].compactMap { $0 }.joined(separator: " ")
+        
         return ProductLinkAttributes(localizedTitle: item.name,
-                                     localizedPrice: "RUB \(productLink.price.formatted())",
+                                     localizedPrice: priceString,
                                      isAvailable: isAvailable(productLink),
                                      loadImage: loadImage,
                                      loadBannerPreviewImage: loadBannerPreviewImage,

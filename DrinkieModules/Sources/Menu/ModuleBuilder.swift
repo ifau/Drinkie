@@ -1,12 +1,14 @@
 import Foundation
 import UIKit
 import SwiftUI
+import Combine
 import DRAPI
 
 public enum MenuModule {
     
     public struct Dependencies {
         
+        public var selectedStoreUnit: AnyPublisher<(unit: DRAPI.Model.GetChain.StoreUnit, currency: DRAPI.Model.GetChain.Currency)?, Never>
         public var fetchMenuView: () async throws -> DRAPI.Model.GetMenuView.Response
         public var fetchMenu: () async throws -> DRAPI.Model.GetMenu.Response
         public var fetchPromotions: () async throws -> DRAPI.Model.GetPromotions.Response
@@ -15,7 +17,8 @@ public enum MenuModule {
         public var navigateToProductDetails: (_ product: DRAPI.Model.GetMenu.Product, _ relatedProducts: [DRAPI.Model.GetMenu.Product]) -> Void
         public var navigateToSelectStoreUnit: () -> Void
         
-        public init(fetchMenuView: @escaping () async throws -> DRAPI.Model.GetMenuView.Response,
+        public init(selectedStoreUnit: AnyPublisher<(unit: DRAPI.Model.GetChain.StoreUnit, currency: DRAPI.Model.GetChain.Currency)?, Never>,
+                    fetchMenuView: @escaping () async throws -> DRAPI.Model.GetMenuView.Response,
                     fetchMenu: @escaping () async throws -> DRAPI.Model.GetMenu.Response,
                     fetchPromotions: @escaping () async throws -> DRAPI.Model.GetPromotions.Response,
                     fetchStops: @escaping () async throws -> DRAPI.Model.GetStops.Response,
@@ -23,6 +26,7 @@ public enum MenuModule {
                     navigateToProductDetails: @escaping (DRAPI.Model.GetMenu.Product, [DRAPI.Model.GetMenu.Product]) -> Void,
                     navigateToSelectStoreUnit: @escaping () -> Void) {
             
+            self.selectedStoreUnit = selectedStoreUnit
             self.fetchMenuView = fetchMenuView
             self.fetchMenu = fetchMenu
             self.fetchPromotions = fetchPromotions

@@ -28,6 +28,7 @@ final class ProductDetailsViewModel {
     }
     
     private func bindInternalViewModels() {
+        let currencyPublisher = dependencies.selectedStoreUnit.map { $0?.currency }
         let selectedProductPublisher = actionHeaderViewModel.$selectedProduct
         let selectedIngredientsPublisher = customiseProductViewModel.output.selectedIngredientsPublisher
         
@@ -58,5 +59,11 @@ final class ProductDetailsViewModel {
         totalFoodValuePublisher
             .sink { [weak self] in self?.infoSectionViewModel.foodValue = $0 }
             .store(in: &subscriptions)
+        
+        currencyPublisher.sink { [weak self] in
+            self?.customiseProductViewModel.input.send(.didReceiveCurrency($0))
+            self?.actionHeaderViewModel.currency = $0
+        }
+        .store(in: &subscriptions)
     }
 }

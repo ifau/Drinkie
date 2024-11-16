@@ -95,9 +95,10 @@ final class MenuView: UIView {
             overlayView?.frame = bounds
             addSubview(overlayView!)
             
-        case .loaded(let menuView):
+        case .loaded(let menuView, let storeUnit):
             self.tabs = menuView.tabs
             self.reloadTabs()
+            self.storeUnitView.configure(storeUnit: storeUnit)
             UIView.animate(withDuration: 0.5,
                            animations: { self.overlayView?.alpha = 0.0 },
                            completion: { _ in self.overlayView?.removeFromSuperview() }
@@ -135,7 +136,7 @@ final class MenuView: UIView {
     
     private func recalculateStoreUnitFrame() {
         let activeTabOffset = visibleTabViewController?.scrollViewOffset ?? .zero
-        let defaultOffset = safeAreaInsets.top + Spacing.small.value
+        let defaultOffset = safeAreaInsets.top > 0 ? safeAreaInsets.top : Spacing.medium.value
         let origin = CGPoint(x: Spacing.medium.value, y: min(defaultOffset - activeTabOffset.y, defaultOffset))
         
         storeUnitView.frame = CGRect(origin: origin, size: storeUnitView.intrinsicContentSize)

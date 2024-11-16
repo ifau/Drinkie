@@ -14,11 +14,6 @@ final public class MenuViewController: UIViewController {
         self.view = MenuView()
     }
     
-    override public func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        viewModel?.input.send(.viewDidAppear)
-    }
-    
     private func subscribeToViewModel() {
         viewModelSubscription = viewModel?.state
             .receive(on: DispatchQueue.main)

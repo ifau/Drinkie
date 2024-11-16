@@ -7,6 +7,7 @@ struct MutableIngredient {
     var quantity: QuantityVariation
     var isSelected: Bool
     var isAvailable: Bool
+    var currency: String?
     
     let loadImage: (_ size: CGSize) async throws -> UIImage?
 }
@@ -17,6 +18,7 @@ extension MutableIngredient: Hashable {
         guard lhs.quantity == rhs.quantity else { return false }
         guard lhs.isSelected == rhs.isSelected else { return false }
         guard lhs.isAvailable == rhs.isAvailable else { return false }
+        guard lhs.currency == rhs.currency else { return false }
         return true
     }
     
@@ -25,5 +27,6 @@ extension MutableIngredient: Hashable {
         hasher.combine(quantity)
         hasher.combine(isSelected)
         hasher.combine(isAvailable)
+        hasher.combine(currency)
     }
 }

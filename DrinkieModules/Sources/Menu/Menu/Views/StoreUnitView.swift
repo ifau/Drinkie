@@ -1,14 +1,13 @@
 import UIKit
 import DRUIKit
+import DRAPI
 
 final class StoreUnitView: UIView {
     
+    private let imageSize = CGSize(width: 48, height: 48)
+    
     private lazy var imageView: UIImageView = {
-        let colorsConfig = UIImage.SymbolConfiguration(paletteColors: [AppColor.brandPrimary.value])
-        let sizeConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .regular)
-        let image = UIImage(systemName: "leaf.fill", withConfiguration: colorsConfig.applying(sizeConfig))
-        
-        let view = UIImageView(image: image)
+        let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -41,8 +40,8 @@ final class StoreUnitView: UIView {
     }()
     
     override var intrinsicContentSize: CGSize {
-        let width = imageView.intrinsicContentSize.width + max(titleLabel.intrinsicContentSize.width, subtitleLabel.intrinsicContentSize.width) + Spacing.small.value
-        let height = max(imageView.intrinsicContentSize.height, (titleLabel.intrinsicContentSize.height + subtitleLabel.intrinsicContentSize.height + labelStackView.spacing))
+        let width = imageSize.width + max(titleLabel.intrinsicContentSize.width, subtitleLabel.intrinsicContentSize.width) + Spacing.small.value
+        let height = max(imageSize.height, (titleLabel.intrinsicContentSize.height + subtitleLabel.intrinsicContentSize.height + labelStackView.spacing))
         return CGSize(width: width, height: height)
     }
     
@@ -53,28 +52,58 @@ final class StoreUnitView: UIView {
         addSubview(imageView)
         addSubview(labelStackView)
         
-        titleLabel.text = "Coffee shop"
-        subtitleLabel.text = "till 20:00"
-        
         NSLayoutConstraint.activate([
-            imageView.topAnchor.constraint(equalTo: topAnchor),
             imageView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            imageView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: 1.0),
+            imageView.centerYAnchor.constraint(equalTo: centerYAnchor),
             
-            labelStackView.topAnchor.constraint(equalTo: topAnchor),
-            //labelStackView.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: Spacing.small.value),
             labelStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            labelStackView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            labelStackView.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
         
-        let contraint = labelStackView.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: Spacing.small.value)
-        contraint.priority = .defaultHigh
-        contraint.isActive = true
+        [
+            labelStackView.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: Spacing.small.value),
+            imageView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor),
+            imageView.bottomAnchor.constraint(greaterThanOrEqualTo: bottomAnchor),
+            imageView.widthAnchor.constraint(equalToConstant: imageSize.width),
+            imageView.heightAnchor.constraint(equalToConstant: imageSize.height)
+        ].forEach {
+            $0.priority = .defaultHigh
+            $0.isActive = true
+        }
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        labelStackView.spacing = 2.0
+    }
+    
+    func configure(storeUnit: StoreUnit) {
+        
+        // TODO: localisation
+        var imageName: String
+        var description: String
+        switch storeUnit.schedule.openStatus(relaitiveTo: .now) {
+        case .openUntil(_, let time):
+            let hour = time.hour.formatted(.number.precision(.integerLength(2)))
+            let minutes = time.minute.formatted(.number.precision(.integerLength(2)))
+            description = "till \(hour):\(minutes)"
+            imageName = "leaf.fill"
+                
+        case .closedUntil(_, let time):
+            let hour = time.hour.formatted(.number.precision(.integerLength(2)))
+            let minutes = time.minute.formatted(.number.precision(.integerLength(2)))
+            description = "Open at \(hour):\(minutes)"
+            imageName = "moon.stars.fill"
+            
+        case .unknown:
+            description = "closed"
+            imageName = "moon.stars.fill"
+        }
+        
+        titleLabel.text = storeUnit.alias
+        subtitleLabel.text = description
+        
+        let colorsConfig = UIImage.SymbolConfiguration(paletteColors: [AppColor.brandPrimary.value])
+        let sizeConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .regular)
+        imageView.image = UIImage(systemName: imageName, withConfiguration: colorsConfig.applying(sizeConfig))
     }
 }

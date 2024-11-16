@@ -11,17 +11,25 @@ import DRUIKit
 @main
 struct DrinkieApp: App {
     
-    @StateObject var container = PreviewContainer()
-    // @StateObject var container = ProductionContainer()
+    @StateObject var session: Session
+    @StateObject var container: DependencyContainer
     
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(\.dependencyContainer, container)
+                .environmentObject(session)
+                .environmentObject(container)
         }
     }
     
     init() {
         DRUIKit.registerFonts()
+        
+        let newSession = Session()
+        let container = PreviewContainer()
+        container.registerSingleton(singletonInstance: newSession)
+        
+        _session = .init(wrappedValue: newSession)
+        _container = .init(wrappedValue: container)
     }
 }

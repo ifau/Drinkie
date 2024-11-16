@@ -58,3 +58,60 @@ extension Model.GetMenu.FoodValue {
         return Model.GetMenu.FoodValue(fats: fats, proteins: proteins, carbohydrates: carbohydrates, kiloCalories: kiloCalories, weight: weight)
     }
 }
+
+extension Model.GetChain.Schedule {
+    
+    public enum OpenStatus {
+        case openUntil(day: Model.GetChain.DayEnum, time: Model.GetChain.Time)
+        case closedUntil(day: Model.GetChain.DayEnum, time: Model.GetChain.Time)
+        case unknown
+    }
+    
+    public func openStatus(relaitiveTo date: Date, calendar: Calendar = .current) -> OpenStatus {
+        
+        let orderedDays: [DRAPI.Model.GetChain.DayEnum] = [.sunday, .monday, .tuesday, .wednesday, .thursday, .friday, .saturday]
+        
+        let currentHour = calendar.component(.hour, from: date)
+        let currentMinute = calendar.component(.minute, from: date)
+        let currentDay = orderedDays[(calendar.dateComponents([.weekday], from: date).weekday ?? 1) - 1]
+                
+        func minutes(hour: Int, minute: Int) -> Int {
+            return hour * 60 + minute
+        }
+                
+        func schedule(for day: DRAPI.Model.GetChain.DayEnum) -> DRAPI.Model.GetChain.DayElement? {
+            return days.first(where: { $0.day == day && $0.period != nil })
+        }
+                
+        func nextScheduledDay(from day: DRAPI.Model.GetChain.DayEnum) -> DRAPI.Model.GetChain.DayElement? {
+            let startIndex = orderedDays.firstIndex(of: day) ?? 0
+            let rotatedDays = orderedDays[startIndex...] + orderedDays[..<startIndex]
+            return rotatedDays
+                .dropFirst() // Start from the next day
+                .compactMap(schedule(for:))
+                .first
+        }
+        
+        if let currentDaySchedule = schedule(for: currentDay),
+           let start = currentDaySchedule.period?.start,
+           let end = currentDaySchedule.period?.end {
+            
+            let currentMinutes = minutes(hour: currentHour, minute: currentMinute)
+            let startMinutes = minutes(hour: start.hour, minute: start.minute)
+            let endMinutes = minutes(hour: end.hour, minute: end.minute)
+            
+            if currentMinutes < startMinutes {
+                return .closedUntil(day: currentDay, time: start)
+            } else if currentMinutes < endMinutes {
+                return .openUntil(day: currentDay, time: end)
+            }
+        }
+        
+        if let nextDaySchedule = nextScheduledDay(from: currentDay),
+           let start = nextDaySchedule.period?.start {
+            return .closedUntil(day: nextDaySchedule.day, time: start)
+        }
+        
+        return .unknown
+    }
+}
