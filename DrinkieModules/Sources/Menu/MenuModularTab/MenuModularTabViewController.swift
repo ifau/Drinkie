@@ -46,6 +46,7 @@ final class MenuModularTabViewController: UIViewController {
         _view.showData(tabData: tabData, animated: false) {
             DispatchQueue.main.async {
                 self.scrollViewOffset = initialScrollOffset
+                self._view.resumeVideoPlayback()
             }
         }
     }
