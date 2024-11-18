@@ -15,8 +15,10 @@ final class ProductDetailsCollectionViewLayout: UICollectionViewLayout {
     var pageHeight: CGFloat {
         guard let collectionView else { return .zero }
         let baseHeight = collectionView.frame.height * configuration.actionHeaderTopPaddingRatio + configuration.actionHeaderHeight
-        guard hasCustomizationSection else { return baseHeight }
-        return baseHeight + max(0, configuration.customizationCellEstimatedHeight.collapsed - configuration.actionHeaderHeight)
+        let heightWithCustomization = baseHeight + max(0, configuration.customizationCellEstimatedHeight.collapsed - configuration.actionHeaderHeight)
+        
+        // round down because scrollRectToVisible not always works with fraction numbers, e.g. 536.1
+        return (hasCustomizationSection ? heightWithCustomization : baseHeight).rounded(.down)
     }
     
     override class var layoutAttributesClass: AnyClass {
