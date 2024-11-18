@@ -77,7 +77,7 @@ class BackgroundVideoReusableView: UICollectionReusableView {
         }
         
         let layoutConfiguration = ProductDetailsCollectionViewLayout.Configuration()
-        let y = layoutConfiguration.actionHeaderTopPaddingRatio * bounds.height - titleHeight
+        let y = layoutConfiguration.actionHeaderTopPaddingRatio * bounds.height - titleHeight - Spacing.small.value
         titleLabel.frame.size = CGSize(width: titleWidth, height: titleHeight)
         titleLabel.frame.origin = CGPoint(x: Spacing.large.value, y: y)
     }

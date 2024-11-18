@@ -6,6 +6,7 @@ final class CustomiseProductView: UIView {
     
     static let ingredientItemSize = CGSize(width: 104, height: 176)
     static let compositionGroupItemSize = CGSize(width: 78, height: 144)
+    var ingredientsTitleHeight: CGFloat { titleLabel.intrinsicContentSize.height }
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -137,11 +138,10 @@ final class CustomiseProductView: UIView {
     
     private func updateFrames() {
         ingredientsContainerMaskLayer.frame = ingredientsContainerView.bounds
-        ingredientsCollectionView.frame = ingredientsContainerView.bounds.offsetBy(dx: 0, dy: ingredientsContainerView.bounds.height * (1 - transitionProgress))
+        ingredientsCollectionView.frame = ingredientsContainerView.bounds.offsetBy(dx: 0, dy: (ingredientsContainerView.bounds.height - ingredientsTitleHeight) * (1 - transitionProgress))
         
-        let titleHeight = titleLabel.intrinsicContentSize.height
-        titleLabel.frame = CGRect(x: 0, y: compositionGroupsCollectionView.frame.minY - titleHeight, width: bounds.width, height: titleHeight)
-        titleLabel.frame = titleLabel.frame.offsetBy(dx: 0, dy: ingredientsContainerView.bounds.height * -transitionProgress)
+        titleLabel.frame = CGRect(x: 0, y: compositionGroupsCollectionView.frame.minY - ingredientsTitleHeight, width: bounds.width, height: ingredientsTitleHeight)
+        titleLabel.frame = titleLabel.frame.offsetBy(dx: 0, dy: (ingredientsContainerView.bounds.height - ingredientsTitleHeight) * -transitionProgress)
         
         selectionIndicatorView.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
     }

@@ -5,11 +5,11 @@ extension ProductDetailsCollectionViewLayout {
     struct Configuration {
         
         let actionHeaderTopPaddingRatio: CGFloat = 0.6
-        let actionHeaderHeight: CGFloat = 100.0
+        let actionHeaderHeight: CGFloat = 80.0
         
         // These values could be changed if cell cannot be fitted in collection view bounds
         // like split view, device with small screen, etc.
-        let customizationCellEstimatedHeight: (collapsed: CGFloat, expanded: CGFloat) = (collapsed: 160, expanded: 160+510)
+        let customizationCellEstimatedHeight: (collapsed: CGFloat, expanded: CGFloat) = (collapsed: 160, expanded: 160+490)
         
         let infoCellEstimatedHeight: CGFloat = 500
         

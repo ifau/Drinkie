@@ -63,7 +63,7 @@ extension CustomiseProductView {
                 section.contentInsets = .init(top: verticalInsets, leading: horizontalInsets, bottom: verticalInsets, trailing: horizontalInsets)
             }
             
-            let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .absolute(layoutEnvironment.container.contentSize.width), heightDimension: .absolute(48.0)), elementKind: IngredientsHeaderReusableView.kind, alignment: .top)
+            let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .absolute(layoutEnvironment.container.contentSize.width), heightDimension: .absolute(self?.ingredientsTitleHeight ?? 48.0)), elementKind: IngredientsHeaderReusableView.kind, alignment: .top)
             let footer = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .absolute(layoutEnvironment.container.contentSize.width), heightDimension: .absolute(48.0)), elementKind: IngredientsFooterReusableView.kind, alignment: .bottom, absoluteOffset: .init(x: 0, y: -16))
 
             header.extendsBoundary = false

@@ -22,9 +22,10 @@ extension ProductDetailsCollectionViewLayout {
         var customizationCellAttributes: ProductDetailsCellAttributes?
         if hasCustomizationSection, collectionView.numberOfItems(inSection: 1) == 1 {
             let cellAttributes = ProductDetailsCellAttributes(forCellWith: IndexPath(item: 0, section: 1))
+            let spacingAfterActionHeader = 8.0
             
             let customizationCellHeight = min(configuration.customizationCellEstimatedHeight.expanded, collectionView.frame.height - configuration.actionHeaderHeight)
-            let customizationCellY = collectionView.frame.height * configuration.actionHeaderTopPaddingRatio + configuration.actionHeaderHeight + configuration.customizationCellEstimatedHeight.collapsed - customizationCellHeight
+            let customizationCellY = collectionView.frame.height * configuration.actionHeaderTopPaddingRatio + configuration.actionHeaderHeight + spacingAfterActionHeader + configuration.customizationCellEstimatedHeight.collapsed - customizationCellHeight
             
             cellAttributes.frame = CGRect(x: 0, y: customizationCellY, width: collectionView.frame.width, height: customizationCellHeight)
             cellAttributes.zIndex = ZLevel.cell
@@ -40,16 +41,7 @@ extension ProductDetailsCollectionViewLayout {
             infoCellAttributes.zIndex = ZLevel.cell
             result.append(infoCellAttributes)
         }
-        
-//        for sectionIndex in 0..<numberOfSections {
-//            let numberOfItems = collectionView.numberOfItems(inSection: sectionIndex)
-//            for itemIndex in 0..<numberOfItems {
-//                
-//                let indexPath = IndexPath(item: itemIndex, section: sectionIndex)
-//                let cellAttributes = ProductDetailsCellAttributes(forCellWith: indexPath)
-//            }
-//        }
-        
+
         return result
     }
     
