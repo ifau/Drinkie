@@ -108,6 +108,19 @@ class DefaultProductCell: UICollectionViewCell {
         super.layoutSubviews()
         mainStackView.axis = (frame.width > frame.height) ? .horizontal : .vertical
         labelStackView.distribution = (frame.width > frame.height) ? .fillProportionally : .fill
+        
+        guard let spacingViewIndex = labelStackView.arrangedSubviews.firstIndex(of: flexibleSpaceView) else { return }
+        
+        if mainStackView.axis == .horizontal, spacingViewIndex != 0 {
+            labelStackView.removeArrangedSubview(flexibleSpaceView)
+            labelStackView.insertArrangedSubview(flexibleSpaceView, at: 0)
+            labelStackView.setNeedsLayout()
+        }
+        if mainStackView.axis == .vertical, spacingViewIndex != 1 {
+            labelStackView.removeArrangedSubview(flexibleSpaceView)
+            labelStackView.insertArrangedSubview(flexibleSpaceView, at: 1)
+            labelStackView.setNeedsLayout()
+        }
     }
     
     override func prepareForReuse() {
